@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724a1838e76f92845b12fd0e98a1625f, type: 3}
+  m_Name: SentinelStrike
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityCard
+  cardName: Sentinel Strike
+  description: Deal 2 damage to the enemy.
+  artwork: {fileID: 21300000, guid: 48a497127e5d544428882b4f716b3d51, type: 3}
+  manaCost: 1
+  effects:
+  - effect: {fileID: 11400000, guid: daf6a7509cf2cb948adadd65642bc777, type: 2}
+    value: 2
+    targetType: 0
+  requiredTag: 1

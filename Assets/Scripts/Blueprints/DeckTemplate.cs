@@ -1,0 +1,9 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+[CreateAssetMenu(fileName = "New Deck Template", menuName = "Cards/Deck Template")]
+public class DeckTemplate : ScriptableObject
+{
+    public string deckName;
+    public List<Card> startingCards;
+}
