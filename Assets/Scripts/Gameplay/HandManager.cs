@@ -58,6 +58,7 @@ public class HandManager : MonoBehaviour
         StartCoroutine(InstantiateCardInHand(drawnCard));
     }
 
+    // Coroutine to draw a card with animation
     private IEnumerator InstantiateCardInHand(Card drawnCard)
     {
         GameObject newCardInstance = Instantiate(cardPrefab, handArea);

@@ -19,16 +19,25 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     #endregion
 
     #region [VARS] Basic variables
+    // Store a reference to the Card Data, to pass them on when played
     private Card cardData;
+    // Store the preferredWith of the Card, to use it for the placeholder when Drag&Drop-ing
     private float cardPreferredWidth;
     #endregion
 
     #region [VARS] Hover and Drag & Drop variables
+    [Header("Interactions (hover, dragging...)")]
+    // Make false to prevent events like hover and dragging
+    public bool isInteractable = true;
+    // Store the reference to the current hover coroutine, so we can stop it prematurely
     private Coroutine hoverCoroutine;
+    // Store the reference to the draggedCardPlaceholder, so we can destroy the placeholder when dropping the card
     private GameObject draggedCardPlaceholder = null;
+    // We will update this number when dragging, to know where to place it when dropping it
     private int draggedCardNewSiblingIndex = 0;
-    private static bool IsDraggingAnyCard = false;
+    // Store a reference to the original parent of the card, to bring the card back there when dropping
     private Transform originalParent;
+    // The CanvasGroup of the
     private CanvasGroup canvasGroup;
     #endregion
 
@@ -59,15 +68,17 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsDraggingAnyCard) return;
+        if (!isInteractable) return;
         StopHoverAnimation();
         // Lift by 50 units and grow to 1.2x size
         hoverCoroutine = StartCoroutine(AnimateHover(new Vector3(0, 60, 0), new Vector3(1.1f, 1.1f, 1)));
+        CardPreview.Instance.ShowPreview(cardData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (IsDraggingAnyCard) return;
+        if (!isInteractable) return;
+        CardPreview.Instance.HidePreview();
         StopHoverAnimation();
         // Return to center and normal size
         hoverCoroutine = StartCoroutine(AnimateHover(Vector3.zero, Vector3.one));
@@ -79,8 +90,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (IsDraggingAnyCard) return;
-        IsDraggingAnyCard = true;
+        if (!isInteractable) return;
         StopHoverAnimation();
         cardVisual.localPosition = Vector3.zero;
         cardVisual.localScale = Vector3.one;
@@ -108,9 +118,12 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isInteractable) return;
+
         // Follow the mouse perfectly
         transform.position = eventData.position;
 
+        // Loop through the cards in the hand, to check the new position for the card (and move the placeholder there)
         for (int i = 0; i < originalParent.childCount; i++)
         {
             if (transform.position.x < (originalParent.GetChild(i).position.x + (cardPreferredWidth * 0.3)))
@@ -127,6 +140,8 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isInteractable) return;
+
         transform.SetParent(originalParent);
 
         // Snap to the placeholder's spot
@@ -139,7 +154,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         cardVisual.localPosition = Vector3.zero;
         cardVisual.localScale = Vector3.one;
 
-        IsDraggingAnyCard = false;
         hoverCoroutine = StartCoroutine(AnimateHover(Vector3.zero, Vector3.one));
     }
 
@@ -208,7 +222,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     #endregion
 
-    #region [(WIP) - GAMEPLAY]: Play a card
+    #region [(WIP) - GAMEPLAY] Play a card
     // (WIP): Play a card on the board
     public void PlayCard()
     {
@@ -216,4 +230,14 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     #endregion
 
+    #region [(WIP) - Misc] Other methods
+    public void ShowCard()
+    {
+        cardVisual.gameObject.SetActive(true);
+    }
+    public void HideCard()
+    {
+        cardVisual.gameObject.SetActive(false);
+    }
+    #endregion
 }
