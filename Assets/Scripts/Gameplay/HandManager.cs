@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class HandManager : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class HandManager : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private Transform handArea;
 
-    // TODO: Remove this on production, this is for debugging purposes only
+    // TODO: Remove this on production, where the player will set the deck instead
     [Header("Default Deck (DEBUG)")]
     public DeckTemplate defaultDeck;
 
@@ -17,18 +17,17 @@ public class HandManager : MonoBehaviour
     private readonly List<Card> cardsInHand = new();
     private readonly int MAX_CARDS_IN_HAND = 10;
 
-    private enum HandManagerState
+    private int pendingDrawRequests;
+    private bool isDrawing;
+    public bool IsDrawing => isDrawing || pendingDrawRequests > 0;
+
+    private void Start()
     {
-        IDLE,
-        DRAWING,
-        PLAYING
+        InitializeDeck();
     }
 
-    private HandManagerState state = HandManagerState.IDLE;
-
-    void Start()
+    public void InitializeDeck()
     {
-        // Create a new List, so we don't affect the one in the ScriptableObject:
         List<Card> deckCards = new(defaultDeck.startingCards);
         playerDeck = new Deck(deckCards);
         playerDeck.Shuffle();
@@ -36,26 +35,73 @@ public class HandManager : MonoBehaviour
 
     public void Draw()
     {
-        if (state != HandManagerState.IDLE)
+        DrawCards(1);
+    }
+
+    public void DrawCards(int count)
+    {
+        if (count <= 0) return;
+        pendingDrawRequests += count;
+
+        if (!isDrawing)
         {
-            Debug.LogWarning($"Cannot draw cards while on this state: {state}");
-            return;
+            StartCoroutine(ProcessDrawQueue());
         }
-        if (cardsInHand.Count >= MAX_CARDS_IN_HAND)
+    }
+
+    public IEnumerator DrawCardsRoutine(int count)
+    {
+        DrawCards(count);
+        while (IsDrawing)
         {
-            Debug.LogWarning($"You already have {MAX_CARDS_IN_HAND} cards in hand, no more cards will be drawn");
-            return;
+            yield return null;
         }
-        Card drawnCard = playerDeck.Draw();
-        if (drawnCard == null)
+    }
+
+    private IEnumerator ProcessDrawQueue()
+    {
+        while (pendingDrawRequests > 0)
         {
-            Debug.LogWarning("There are no more cards to draw from the deck");
-            return;
+            if (isDrawing)
+            {
+                yield return null;
+                continue;
+            }
+
+            if (cardsInHand.Count >= MAX_CARDS_IN_HAND)
+            {
+                Debug.LogWarning($"You already have {MAX_CARDS_IN_HAND} cards in hand, no more cards will be drawn");
+                pendingDrawRequests = 0;
+                yield break;
+            }
+
+            if (playerDeck == null)
+            {
+                Debug.LogWarning("Deck is not initialized yet. Call InitializeDeck() before drawing.");
+                pendingDrawRequests = 0;
+                yield break;
+            }
+
+            Card drawnCard = playerDeck.Draw();
+            if (drawnCard == null)
+            {
+                Debug.LogWarning("There are no more cards to draw from the deck");
+                pendingDrawRequests = 0;
+                yield break;
+            }
+
+            isDrawing = true;
+            cardsInHand.Add(drawnCard);
+            StartCoroutine(InstantiateCardInHand(drawnCard));
+
+            while (isDrawing)
+            {
+                yield return null;
+            }
+
+            pendingDrawRequests--;
+            yield return null;
         }
-        // Happy Path!
-        state = HandManagerState.DRAWING;
-        cardsInHand.Add(drawnCard);
-        StartCoroutine(InstantiateCardInHand(drawnCard));
     }
 
     // Coroutine to draw a card with animation
@@ -65,6 +111,6 @@ public class HandManager : MonoBehaviour
         CardDisplay cardDisplay = newCardInstance.GetComponent<CardDisplay>();
         cardDisplay.Initialize(drawnCard);
         yield return cardDisplay.StartCardDrawAnimation();
-        state = HandManagerState.IDLE;
+        isDrawing = false;
     }
 }
