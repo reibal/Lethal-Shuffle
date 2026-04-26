@@ -152,10 +152,6 @@ MonoBehaviour:
   uiManager: {fileID: 938642041}
   startingHandSize: 5
   cardsToDrawPerTurn: 2
-  maxPlayerManaPerTurn: 2
-  turnOwnerText: {fileID: 0}
-  turnPhaseText: {fileID: 0}
-  manaText: {fileID: 0}
   OnPlayerTurnStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -207,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &169361836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -960,8 +956,9 @@ MonoBehaviour:
   playPhaseIcon: {fileID: 927339078}
   attackPhaseIcon: {fileID: 560071174}
   turnChangeIcon: {fileID: 1909969554}
-  endTurnButton: {fileID: 0}
-  activeColor: {r: 0.3357991, g: 0.89433956, b: 0.3357991, a: 1}
+  endTurnButton: {fileID: 169361837}
+  playerActiveColor: {r: 0.35, g: 1, b: 0.35, a: 1}
+  enemyActiveColor: {r: 1, g: 0.35, b: 0.35, a: 1}
   inactiveColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &938642042
 Transform:
@@ -1431,25 +1428,29 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4650435733109113323, guid: a6e55ffdbeaf5a744a8240406004e7af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8552446649530650281, guid: a6e55ffdbeaf5a744a8240406004e7af, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8552446649530650281, guid: a6e55ffdbeaf5a744a8240406004e7af, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8552446649530650281, guid: a6e55ffdbeaf5a744a8240406004e7af, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8552446649530650281, guid: a6e55ffdbeaf5a744a8240406004e7af, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8552446649530650281, guid: a6e55ffdbeaf5a744a8240406004e7af, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
