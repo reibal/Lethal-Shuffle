@@ -1,3 +1,5 @@
+# Glosario de Lethal Shuffle
+
 # Cartas
 ## Cartas de Campeón
 Cada baraja debe contener un "Mazo de Cartas de Campeón", con 2 Cartas de Campeón.
@@ -28,8 +30,8 @@ Existen 2 tipos de entidades:
 - **Entidad de Campeón**
     - En el caso de los Jugadores, esta será la entidad que represente sus capacidades. Algunas cartas tienen requisitos específicos, y sólo podrán usarse si la entidad de campeón activa los cumple. Además, si los puntos de vida de una Entidad de Campeón llegan a 0, se deberá invocar al siguiente del Mazo de Campeones. Si el último Campeón es derrotado, ese jugador pierde la partida.
     - En el caso de los enemigos (en el modo PvE), el **Boss** sería el equivalente a una Entidad de Campeón. A efectos prácticos funciona del mismo modo, excepto por la parte de los requisitos, que por cómo están programados los enemigos no aplicaría esta limitación.
-- **Entidad Invocada** [(WIP)]
-	- En el caso de los jugadores, estas 
+- **Entidad Invocada**
+	- En el caso de los jugadores, estas serán las entidades que se invoquen con Cartas de Entidad, las cuales tendrán Ataque, Vida y (opcionalmente) Efectos. Serán las que ocupen los 2 slots para entidades invocadas en cada lado del tablero.
 
 ### Estadísticas de las Entidades
 Las entidades siempre tienen puntos de ataque y puntos de vida, y algunas de ellas también tienen efectos especiales.
