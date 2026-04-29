@@ -14,7 +14,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI manaText;
-    [SerializeField] private TextMeshProUGUI tagText;
     [SerializeField] private Image artworkImage;
     #endregion
 
@@ -52,11 +51,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // HandManager needs to call Initialize() to "fill in" the card's info
     public void Initialize(Card data)
     {
+        // TODO: Review initialization to make sure all three card types have their own UI
         cardData = data;
         nameText.text = data.cardName;
         descriptionText.text = data.description;
         manaText.text = data.manaCost.ToString();
-        tagText.text = data.requiredTag.ToString();
 
         if (data.artwork != null)
         {

@@ -19,7 +19,4 @@ public abstract class Card : ScriptableObject
     [Header("Mechanics")]
     public int manaCost;
     public List<EffectEntry> effects;
-
-    [Header("Requirements")]
-    public CardEnums.CardTag requiredTag; // e.g.: "Martial", "Sneaky"...
 }

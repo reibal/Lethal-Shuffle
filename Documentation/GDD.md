@@ -7,10 +7,30 @@ De igual manera, algunas etapas funcionarán con un sistema de oleadas en el que
 
 En cualquier caso, la victoria en el modo PvE se logra cuando se derrota finalmente al Boss, independientemente de si han quedado adds por derrotar.
 
+> Nota: El plan de implementación completo se encuentra en `Documentation/Roadmap.md`. El GDD se mantiene enfocado en las reglas y el diseño.
+
 ## Flujo (simplificado) de la partida
 ### Inicio de la partida
 Al iniciar la partida, **cada jugador roba 5 cartas** (de momento sólo existirá un jugador, ya que en el modo PvE el enemigo tendrá su propio sistema sin cartas).
-El tablero consistirá de dos mitades, una para cada jugador. En los extremos opuestos estarán las entidades de Campeón/Boss. Delante de las mismas, habrá dos espacios en cada mitad para colocar otras entidades.
+El tablero consistirá en dos mitades, una para cada jugador, con una estructura de slots alineados:
+- 3 slots de Entidad en cada lado.
+- 3 slots de objeto debajo de los slots de Entidad en cada lado.
+
+En cada lado del tablero, el slot de Entidad más cercano al borde exterior está reservado para el Campeón o Boss. Ese slot reservado del jugador (extremo izquierdo) y del enemigo (extremo derecho) no pueden ser ocupados por Entidades invocadas.
+
+Las Entidades invocadas sólo pueden colocarse en los otros 2 slots de Entidad disponibles en cada lado.
+
+Los objetos se colocan en los slots de objeto (que quedan debajo de los slots de Entidad) y cada slot de objeto está asociado a la Entidad que queda encima.
+
+Ejemplo de disposición del tablero:
+
+| 				Lado del Jugador				  | 				Lado del Enemigo	 			 |
+| ----------------------------------------------- | ------------------------------------------------ |
+| `[CAMPEÓN]`	`[Entidad 1]` 	`[Entidad 2]`	  |		`[Entidad 2]`	`[Entidad 1]`	`[BOSS]`	 |
+| `[Objeto 1]`	`[Objeto 2]`	`[Objeto 3]`	  |		`[Objeto 3]`	`[Objeto 2]`	`[Objeto 1]` |
+|												  |													 |
+
+Si un objeto tiene un efecto dirigido a la Entidad asociada, este se aplicará a la Entidad que ocupe el slot superior. Si es un objeto con un efecto genérico, simplemente ocupará el slot de objeto y aplicará su efecto a nivel global.
 
 ### Turno del jugador
 El jugador tomará el primer turno.
@@ -37,6 +57,8 @@ En cualquier momento, un Campeón puede ser derrotado. Si en ese momento queda o
 Cuando el último campeón disponible de un jugador es derrotado, dicho jugador pierde la partida.
 Lo mismo aplica con un Boss en el PvE: si el Boss muere, es una victoria para el jugador (aunque queden esbirros vivos).
 
+Para el primer prototipo, el sistema de campeones se puede posponer hasta después de implementar el tablero, las invocaciones de entidades y la resolución de combate. La primera versión puede llegar a funcionar con un único campeón activo, y luego ampliarse para admitir el segundo campeón y el cambio automático entre campeones.
+
 ## Tipos de Cartas
 Cada baraja consta de dos partes: 
 - Cartas de Campeón (únicamente 2 Cartas de Campeón)
@@ -55,9 +77,6 @@ Entre los distintos tipos de cartas de juego encontraremos:
 Existirán 3 tipos distintos de **Cartas de Juego**:
 - **Cartas de Habilidad**: Son Cartas que tienen un **efecto inmediato** (por ejemplo: infligir daño, curar vida, o dar ciertos beneficios o desventajas). Sólo pueden usarse por campeones que tengan la Tag que requiere la carta.
 - **Cartas de Entidad**: Son Cartas que permiten **invocar una entidad sobre el tablero**. Las entidades tienen estadísticas de Daño, Vida y (opcionalmente) Efectos. Sólo pueden usarse por campeones que tengan la Tag que requiere la carta.
-- **Cartas de Objeto**: Son cartas que otorgan ciertos **efectos especiales de manera permanente**, mientras estén en el tablero. Estas cartas no tienen Tags asociadas, por lo que pueden ser usadas con cualquier Campeón.
+- **Cartas de Objeto**: Son cartas que otorgan ciertos **efectos especiales de manera continuada**, mientras estén en el tablero. Estas cartas no tienen Tags asociadas, por lo que pueden ser usadas con cualquier Campeón.
 	- Cada jugador sólo podrá tener 2 objetos al mismo tiempo, cada uno "vinculado" con un espacio de Entidad. Esto debe ser así porque algunos objetos tendrán efectos sobre la Entidad "vinculada". Los objetos cuyos efectos no guarden relación con la Entidad, simplemente ocuparán ese espacio y aplicarán su efecto en general.
-	- Se está valorando que los objetos tengan una duración (en turnos) y después desaparezcan, de manera que requiera un factor estratégico adicional para decidir cuándo usarlos.
-	- *Más adelante quizá se añadirán "Cartas de Objeto Maldito", que seguirán la misma lógica que las Cartas de Objeto, pero se utilizarán sobre los espacios de objeto del enemigo, y darán ventajas e inconvenientes (cada carta maldita debe dar al menos una ventaja) de manera forzosa al rival, además de bloquear ese espacio de objeto.
-		- Esto, por razones obvias, es complicado a nivel de balanceo, por lo que por el momento no se implementará todavía.*
-
+	- Algunos objetos tendrán una caducidad (en turnos) y después desaparecerán. Esto le otorga un factor estratégico adicional a este tipo de carta. Los que no tengan caducidad, se quedarán en juego indefinidamente, hasta que algún Efecto los destruya.
