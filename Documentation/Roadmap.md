@@ -5,12 +5,11 @@ Este roadmap describe las fases de desarrollo para llegar a un prototipo jugable
 - Implementar el tablero con 3 slots de personajes y 3 slots de objetos por cada lado.
 - Implementar las Cartas de Entidad (heredando de Card).
 - Implementar las Cartas de Objeto (heredando de Card).
-- Implementar un sistema que reconozca cuando se ha jugado una carta (con el drag n drop ya existente).
-- Permitir invocar cartas de entidad en los slots de personajes del jugador.
-    - Para ello, habilitar distinción a la hora de jugar una carta:
-        - Si es una Carta de Entidad: debería soltarse en un slot de entidad.
-        - Si es una Carta de Objeto: debería soltarse en un slot de objeto.
-        - Si es una carta de Habilidad: podría soltarse en cualquier zona del tablero.
+- Implementar un sistema que reconozca cuando se ha jugado una carta (al soltarla).
+- Permitir invocar las cartas donde corresponda según su tipo:
+    - Si es una Carta de Entidad: debería soltarse en un slot de entidad.
+    - Si es una Carta de Objeto: debería soltarse en un slot de objeto.
+    - Si es una carta de Habilidad: podría soltarse en cualquier zona del tablero.
 - Asegurar que los objetos colocados debajo de un personaje puedan aplicarse a ese personaje cuando correspondan.
 - Ignorar por ahora los campeones y las cartas de campeón.
 
