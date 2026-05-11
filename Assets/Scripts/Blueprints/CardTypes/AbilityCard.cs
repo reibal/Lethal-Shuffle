@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Create New Ability Card", menuName = "Cards")]
+[CreateAssetMenu(fileName = "AbilityCard", menuName = "Cards/Create Ability Card")]
 public class AbilityCard : Card
 {
     [Header("Requirements")]

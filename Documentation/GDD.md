@@ -14,23 +14,17 @@ En cualquier caso, la victoria en el modo PvE se logra cuando se derrota finalme
 Al iniciar la partida, **cada jugador roba 5 cartas** (de momento sólo existirá un jugador, ya que en el modo PvE el enemigo tendrá su propio sistema sin cartas).
 El tablero consistirá en dos mitades, una para cada jugador, con una estructura de slots alineados:
 - 3 slots de Entidad en cada lado.
-- 3 slots de objeto debajo de los slots de Entidad en cada lado.
 
 En cada lado del tablero, el slot de Entidad más cercano al borde exterior está reservado para el Campeón o Boss. Ese slot reservado del jugador (extremo izquierdo) y del enemigo (extremo derecho) no pueden ser ocupados por Entidades invocadas.
 
 Las Entidades invocadas sólo pueden colocarse en los otros 2 slots de Entidad disponibles en cada lado.
-
-Los objetos se colocan en los slots de objeto (que quedan debajo de los slots de Entidad) y cada slot de objeto está asociado a la Entidad que queda encima.
 
 Ejemplo de disposición del tablero:
 
 | 				Lado del Jugador				  | 				Lado del Enemigo	 			 |
 | ----------------------------------------------- | ------------------------------------------------ |
 | `[CAMPEÓN]`	`[Entidad 1]` 	`[Entidad 2]`	  |		`[Entidad 2]`	`[Entidad 1]`	`[BOSS]`	 |
-| `[Objeto 1]`	`[Objeto 2]`	`[Objeto 3]`	  |		`[Objeto 3]`	`[Objeto 2]`	`[Objeto 1]` |
 |												  |													 |
-
-Si un objeto tiene un efecto dirigido a la Entidad asociada, este se aplicará a la Entidad que ocupe el slot superior. Si es un objeto con un efecto genérico, simplemente ocupará el slot de objeto y aplicará su efecto a nivel global.
 
 ### Turno del jugador
 El jugador tomará el primer turno.
@@ -77,6 +71,3 @@ Entre los distintos tipos de cartas de juego encontraremos:
 Existirán 3 tipos distintos de **Cartas de Juego**:
 - **Cartas de Habilidad**: Son Cartas que tienen un **efecto inmediato** (por ejemplo: infligir daño, curar vida, o dar ciertos beneficios o desventajas). Sólo pueden usarse por campeones que tengan la Tag que requiere la carta.
 - **Cartas de Entidad**: Son Cartas que permiten **invocar una entidad sobre el tablero**. Las entidades tienen estadísticas de Daño, Vida y (opcionalmente) Efectos. Sólo pueden usarse por campeones que tengan la Tag que requiere la carta.
-- **Cartas de Objeto**: Son cartas que otorgan ciertos **efectos especiales de manera continuada**, mientras estén en el tablero. Estas cartas no tienen Tags asociadas, por lo que pueden ser usadas con cualquier Campeón.
-	- Cada jugador sólo podrá tener 2 objetos al mismo tiempo, cada uno "vinculado" con un espacio de Entidad. Esto debe ser así porque algunos objetos tendrán efectos sobre la Entidad "vinculada". Los objetos cuyos efectos no guarden relación con la Entidad, simplemente ocuparán ese espacio y aplicarán su efecto en general.
-	- Algunos objetos tendrán una caducidad (en turnos) y después desaparecerán. Esto le otorga un factor estratégico adicional a este tipo de carta. Los que no tengan caducidad, se quedarán en juego indefinidamente, hasta que algún Efecto los destruya.

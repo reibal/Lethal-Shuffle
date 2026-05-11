@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New Deck Template", menuName = "Cards/Deck Template")]
+[CreateAssetMenu(fileName = "New Deck Template", menuName = "Decks/Create Deck Template")]
 public class DeckTemplate : ScriptableObject
 {
     public string deckName;

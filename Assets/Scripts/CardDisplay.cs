@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems; // Required for Pointer Event Interfaces (without those, pointer events don't work)
+using System.Collections.Generic; // Required for lists
 
 [RequireComponent(typeof(LayoutElement))]
 [RequireComponent(typeof(CanvasGroup))]
@@ -19,7 +20,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     #region [VARS] Basic variables
     // Store a reference to the Card Data, to pass them on when played
-    private Card cardData;
+    public Card CardData { get; private set; }
     // Store the preferredWith of the Card, to use it for the placeholder when Drag&Drop-ing
     private float cardPreferredWidth;
     #endregion
@@ -52,7 +53,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void Initialize(Card data)
     {
         // TODO: Review initialization to make sure all three card types have their own UI
-        cardData = data;
+        CardData = data;
         nameText.text = data.cardName;
         descriptionText.text = data.description;
         manaText.text = data.manaCost.ToString();
@@ -71,7 +72,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         StopHoverAnimation();
         // Lift by 50 units and grow to 1.2x size
         hoverCoroutine = StartCoroutine(AnimateHover(new Vector3(0, 60, 0), new Vector3(1.1f, 1.1f, 1)));
-        CardPreview.Instance.ShowPreview(cardData);
+        CardPreview.Instance.ShowPreview(CardData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -141,19 +142,38 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (!isInteractable) return;
 
+        // Detect what's under the cursor when dropping
+        List<RaycastResult> raycastHits = new();
+        EventSystem.current.RaycastAll(eventData, raycastHits);
+
+        // Ability cards can be dropped anywhere on the Board
+        if (CardData is AbilityCard && CheckDropOnBoard(raycastHits))
+        {
+            PlayCard();
+            return;
+        }
+
+        // Return card to original position if not played
         transform.SetParent(originalParent);
-
-        // Snap to the placeholder's spot
         transform.SetSiblingIndex(draggedCardPlaceholder.transform.GetSiblingIndex());
-
-        // Clean up
-        Destroy(draggedCardPlaceholder);
-
         canvasGroup.blocksRaycasts = true;
         cardVisual.localPosition = Vector3.zero;
         cardVisual.localScale = Vector3.one;
-
         hoverCoroutine = StartCoroutine(AnimateHover(Vector3.zero, Vector3.one));
+
+        Destroy(draggedCardPlaceholder);
+    }
+
+    private bool CheckDropOnBoard(List<RaycastResult> raycastHits)
+    {
+        // Try to find a Board under the cursor
+        BoardDropzone boardTarget = null;
+        foreach (RaycastResult result in raycastHits)
+        {
+            boardTarget = result.gameObject.GetComponent<BoardDropzone>();
+            if (boardTarget != null) break;
+        }
+        return boardTarget != null;
     }
 
     #endregion
@@ -225,11 +245,16 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // (WIP): Play a card on the board
     public void PlayCard()
     {
-        Debug.Log($"Playing {cardData.name}");
+        Debug.Log($"Playing {CardData.name}");
+        Destroy(gameObject); // Destroy the card from the hand
+        if (draggedCardPlaceholder)
+        {
+            Destroy(draggedCardPlaceholder); // Destroy the placeholder from the hand
+        }
     }
     #endregion
 
-    #region [(WIP) - Misc] Other methods
+    #region [(WIP) - Misc] Other methods (Show Card)
     public void ShowCard()
     {
         cardVisual.gameObject.SetActive(true);
