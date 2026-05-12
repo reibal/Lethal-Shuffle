@@ -4,5 +4,5 @@ public interface IBattleCard: ICard
 {
     int AttackDamage { get; }
     int HP { get; }
-    Sprite CharacterSprite { get; }
+    Sprite EntitySprite { get; }
 }

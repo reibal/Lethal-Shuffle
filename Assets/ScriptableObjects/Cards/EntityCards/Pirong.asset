@@ -15,8 +15,8 @@ MonoBehaviour:
   cardName: Pirong
   description: An (almost) harmless Pirong
   artwork: {fileID: -2243664436995423339, guid: 5267e664130728340a7b64e4bc2465d6, type: 3}
-  manaCost: 4
   effects: []
+  manaCost: 4
   attackDamage: 1
   hp: 2
-  characterSprite: {fileID: -2243664436995423339, guid: 5267e664130728340a7b64e4bc2465d6, type: 3}
+  entitySprite: {fileID: -2243664436995423339, guid: 5267e664130728340a7b64e4bc2465d6, type: 3}

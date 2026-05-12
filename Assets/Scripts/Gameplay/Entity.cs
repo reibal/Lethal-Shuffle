@@ -3,62 +3,52 @@ using UnityEngine.Events;
 
 public class Entity
 {
-    [Header("Information")]
-    public string entityName;
+    public string EntityName { get; private set; }
+    public int AttackPower { get; private set; }
+    public int CurrentHP { get; private set; }
+    public int MaxHP { get; private set; }
+    public Sprite EntitySprite { get; private set; }
 
-    [Header("Stats")]
-    public int basicAttackPower; // <-- The once-per-turn basic Attack power (can be buffed later)
-    public int maxHealth;
-
-    public int CurrentHealth { get; private set; }
-
-    // (TODO: Usage Pending) This is great for updating your UI automatically!
+    // TODO: (Usage Pending) This is great for updating your UI automatically!
     public UnityEvent OnHealthChanged;
     public UnityEvent OnDeath;
 
-    public Entity(string entityName, int basicAttackPower, int maxHealth)
-    {
-        this.entityName = entityName;
-        this.basicAttackPower = basicAttackPower;
-        this.maxHealth = maxHealth;
-        FullHeal();
-    }
-
     public Entity(EntityCard entityCard)
     {
-        entityName = entityCard.CardName;
-        basicAttackPower = entityCard.AttackDamage;
-        maxHealth = entityCard.HP;
+        EntityName = entityCard.CardName;
+        AttackPower = entityCard.AttackDamage;
+        MaxHP = entityCard.HP;
+        EntitySprite = entityCard.EntitySprite;
         FullHeal();
     }
 
     public void TakeDamage(int amount)
     {
-        CurrentHealth -= amount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        CurrentHP -= amount;
+        CurrentHP = Mathf.Clamp(CurrentHP, 0, MaxHP);
 
         // Tell the UI to update:
         OnHealthChanged?.Invoke();
 
-        if (CurrentHealth <= 0) Die();
+        if (CurrentHP <= 0) Die();
     }
 
     public void Heal(int amount)
     {
-        CurrentHealth += amount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        CurrentHP += amount;
+        CurrentHP = Mathf.Clamp(CurrentHP, 0, MaxHP);
 
         OnHealthChanged?.Invoke();
     }
 
     public void FullHeal()
     {
-        CurrentHealth = maxHealth;
+        CurrentHP = MaxHP;
     }
 
     private void Die()
     {
-        Debug.Log(entityName + " has been defeated!");
+        Debug.Log(EntityName + " has been defeated!");
         OnDeath?.Invoke();
     }
 }

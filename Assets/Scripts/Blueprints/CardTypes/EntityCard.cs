@@ -11,10 +11,10 @@ public class EntityCard : CardData, IPlayableCard, IBattleCard
     [SerializeField] private int hp;
 
     [Header("Art")]
-    public Sprite characterSprite;
+    public Sprite entitySprite;
 
     public int ManaCost { get => manaCost; }
     public int AttackDamage { get => attackDamage; }
     public int HP { get => hp; }
-    public Sprite CharacterSprite { get => characterSprite; }
+    public Sprite EntitySprite { get => entitySprite; }
 }

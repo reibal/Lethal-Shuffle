@@ -8,20 +8,19 @@ Este roadmap describe las fases de desarrollo para llegar a un prototipo jugable
 - [x] Permitir invocar las cartas donde corresponda según su tipo:
     - [x] Si es una Carta de Entidad: debería soltarse en un slot de entidad.
     - [x] Si es una carta de Habilidad: podría soltarse en cualquier zona del tablero.
-- [x] Ignorar por ahora los campeones y las cartas de campeón.
+- [ ] Mostrar al campeon del jugador al iniciar el juego (el campeón existe en el DeckTemplate)
 
 ## Fase 2: Enemigos PvE
-- [ ] Introducir el concepto de Campeón como entidad fija.
+- [ ] Introducir el concepto de Campeón como entidad fija (por ahora existirá un único campeón por mazo).
 - [ ] Introducir el boss como entidad enemiga fija en el lado opuesto.
-- [ ] Agregar adds/enemigos invocables u objetos de boss según el diseño.
-- [ ] Definir un patrón básico de comportamiento/enemigo para el boss.
-- [ ] Considerar oleadas como comportamiento de ciertos bosses si el combate lo requiere.
+- [ ] En la escena de Test, crear un boss con dos adds
+- [ ] Agregar funcionalidad a las fases de ataque del jugador y del enemigo
 
 ## Fase 3: Resolución del combate
-- [ ] Implementar la fase de ataque automático al acabar el turno del jugador.
+- [ ] Definir un patrón básico de comportamiento/enemigo para el boss.
+- [ ] Considerar oleadas como comportamiento de ciertos bosses si el combate lo requiere.
 - [ ] Resolver daño de las entidades en orden sobre objetivos enemigos disponibles.
 - [ ] Aplicar la regla del primer turno si corresponde.
-- [ ] Agregar la fase de ataque del enemigo en su turno.
 
 ## Fase 4: Economía y validaciones
 - [ ] Añadir un sistema de maná y coste de cartas.

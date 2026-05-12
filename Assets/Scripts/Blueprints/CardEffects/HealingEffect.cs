@@ -10,7 +10,7 @@ public class HealingEffect : CardEffect
         if (target != null)
         {
             target.Heal(healAmount);
-            Debug.Log($"{user.entityName} healed {healAmount} health points to {target.entityName}");
+            Debug.Log($"{user.EntityName} healed {healAmount} health points to {target.EntityName}");
         }
     }
 }

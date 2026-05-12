@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7141cd97596f524eb27e0f75eb42a4a, type: 3}
+  m_Name: WarriorCard
+  m_EditorClassIdentifier: Assembly-CSharp::ChampionCard
+  cardName: Warrior
+  description: A warrior with the strength of a thousand... something.
+  artwork: {fileID: 3944610533857416082, guid: a369bf1d13c49974ba0b98ff9dcb27ad, type: 3}
+  effects: []
+  attackDamage: 3
+  hp: 20
+  characterSprite: {fileID: 3944610533857416082, guid: a369bf1d13c49974ba0b98ff9dcb27ad, type: 3}

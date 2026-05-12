@@ -12,5 +12,5 @@ public class ChampionCard : CardData, IBattleCard
 
     public int AttackDamage { get => attackDamage; }
     public int HP { get => hp; }
-    public Sprite CharacterSprite { get => characterSprite; }
+    public Sprite EntitySprite { get => characterSprite; }
 }

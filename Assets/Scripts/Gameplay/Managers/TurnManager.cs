@@ -47,6 +47,8 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartGameRoutine());
+        ChampionSlot championSlot = FindFirstObjectByType<ChampionSlot>();
+        championSlot.SetChampion(handManager.defaultDeck.championCard);
     }
 
     private IEnumerator StartGameRoutine()

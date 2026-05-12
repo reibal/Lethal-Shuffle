@@ -62,6 +62,7 @@ Entre los distintos tipos de cartas de juego encontraremos:
 - **Cartas de Campeón** (en el Mazo de Campeones)
 	- Son las cartas que invocan una Entidad de Campeón, la cual representa al personaje activo mientras esté en juego como Entidad. Tendrán una estadística de Vida, y (opcionalmente) Efectos.
 	- Cuando una Entidad de Campeón es derrotada, se juega la siguiente Carta de Campeón. Si el último Campeón de un jugador es derrotado (es decir, no quedan más cartas en el Mazo de Campeones), este pierde la partida.
+	- (en la versión inicial sólo habrá una carta de campeón por cada mazo)
 - **Cartas de Juego** (en el Mazo de Juego)
 	- Estas serán las cartas que se roben y se jueguen a lo largo de la partida.
 	- Las cartas que vayan a jugarse dependerán de las **Tags** que tenga el Campeón activo, y si este requisito no se cumple, la carta no podrá ser jugada. Por ejemplo, si un jugador tiene en juego a un Campeón con las Tags "Martial" y "Leader", sólo podrá jugar cartas con Tag "Martial", "Leader", o "None".

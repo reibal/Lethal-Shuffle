@@ -10,7 +10,7 @@ public class DamageEffect : CardEffect
         if (target != null)
         {
             target.TakeDamage(damageAmount);
-            Debug.Log($"{user.entityName} dealt {damageAmount} damage to {target.entityName}");
+            Debug.Log($"{user.EntityName} dealt {damageAmount} damage to {target.EntityName}");
         }
     }
 }

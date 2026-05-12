@@ -15,8 +15,8 @@ MonoBehaviour:
   cardName: Filler 01
   description: A filler monster to debug
   artwork: {fileID: 8240354463025354623, guid: a76fe501cba3a364b85b851a16d59425, type: 3}
-  manaCost: 1
   effects: []
+  manaCost: 1
   attackDamage: 1
   hp: 1
-  characterSprite: {fileID: 8240354463025354623, guid: a76fe501cba3a364b85b851a16d59425, type: 3}
+  entitySprite: {fileID: 8240354463025354623, guid: a76fe501cba3a364b85b851a16d59425, type: 3}

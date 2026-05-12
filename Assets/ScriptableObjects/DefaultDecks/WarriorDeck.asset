@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926b007a2bd58ab45beb7cd46f3c86e5, type: 3}
-  m_Name: FighterDeck
+  m_Name: WarriorDeck
   m_EditorClassIdentifier: Assembly-CSharp::DeckTemplate
-  deckName: Fighter Starter Deck
+  deckName: Warrior Starter Deck
+  championCard: {fileID: 11400000, guid: 7aab38c933db6b646bbe7fba57e04a07, type: 2}
   startingCards:
   - {fileID: 11400000, guid: 1aebd3e848e852449938453348211ae2, type: 2}
   - {fileID: 11400000, guid: 1aebd3e848e852449938453348211ae2, type: 2}

@@ -5,5 +5,6 @@ using System.Collections.Generic;
 public class DeckTemplate : ScriptableObject
 {
     public string deckName;
+    public ChampionCard championCard;
     public List<CardData> startingCards;
 }

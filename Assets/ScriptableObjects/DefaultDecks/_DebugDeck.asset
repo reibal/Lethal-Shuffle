@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: _DebugDeck
   m_EditorClassIdentifier: Assembly-CSharp::DeckTemplate
   deckName: Fighter Starter Deck
+  championCard: {fileID: 11400000, guid: 7aab38c933db6b646bbe7fba57e04a07, type: 2}
   startingCards:
   - {fileID: 11400000, guid: e1e50c470c4f67642aff930d96b5b163, type: 2}
   - {fileID: 11400000, guid: e1e50c470c4f67642aff930d96b5b163, type: 2}
@@ -23,4 +24,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f86c694ed633478488ccee69b1513cd1, type: 2}
   - {fileID: 11400000, guid: f86c694ed633478488ccee69b1513cd1, type: 2}
   - {fileID: 11400000, guid: c1ba342c567e2234986354b66a640ba3, type: 2}
-  - {fileID: 11400000, guid: c1ba342c567e2234986354b66a640ba3, type: 2}
+  - {fileID: 11400000, guid: 1aebd3e848e852449938453348211ae2, type: 2}
+  - {fileID: 11400000, guid: 33554285c52913b488ffc9c25abef141, type: 2}
+  - {fileID: 11400000, guid: 81ac925faace658439ea66a421c38541, type: 2}
