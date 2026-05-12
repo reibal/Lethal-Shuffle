@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class EntitySlotDropzone : MonoBehaviour, IDropHandler
 {
     private Image entityImage;
-    private EntityCard currentEntity;
+    private Entity currentEntity;
 
     [SerializeField] private Sprite defaultDropzoneSprite;
     private Color defaultDropzoneTint;
@@ -22,8 +22,7 @@ public class EntitySlotDropzone : MonoBehaviour, IDropHandler
         if (!eventData.pointerDrag.TryGetComponent<CardDisplay>(out var draggedCard)) return;
         if (draggedCard.CardData is not EntityCard entityCard) return;
 
-        // TODO: Create an Entity class that includes the information of the summoned entity
-        currentEntity = entityCard;
+        currentEntity = new Entity(entityCard);
         entityImage.sprite = entityCard.characterSprite;
         entityImage.color = new Color(1, 1, 1);
 

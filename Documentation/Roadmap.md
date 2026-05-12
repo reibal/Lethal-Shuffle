@@ -1,19 +1,17 @@
 # Roadmap de implementación - Lethal Shuffle v1
 Este roadmap describe las fases de desarrollo para llegar a un prototipo jugable PvE, partiendo de la base de que ya tenemos un sistema de turnos muy básico, y un sistema de cartas y de mazo (a excepción de las cartas de entidad y de objeto).
 
-## Fase 1: Tablero y Entidades
+## ✅ Fase 1: Tablero y Entidades
 - [x] Implementar el tablero con 3 slots de personajes y 3 slots de objetos por cada lado.
 - [x] Implementar las Cartas de Entidad (heredando de Card).
-- [ ] Implementar un sistema que reconozca cuando se ha jugado una carta (al soltarla).
-- [ ] Permitir invocar las cartas donde corresponda según su tipo:
-    - [ ] Si es una Carta de Entidad: debería soltarse en un slot de entidad.
-    - [ ] Si es una Carta de Objeto: debería soltarse en un slot de objeto.
-    - [ ] Si es una carta de Habilidad: podría soltarse en cualquier zona del tablero.
-- [ ] Asegurar que los objetos colocados debajo de un personaje puedan aplicarse a ese personaje cuando correspondan.
-- [ ] Ignorar por ahora los campeones y las cartas de campeón.
-- [ ] Implementar las Cartas de Objeto (heredando de Card).
+- [x] Implementar un sistema que reconozca cuando se ha jugado una carta (al soltarla).
+- [x] Permitir invocar las cartas donde corresponda según su tipo:
+    - [x] Si es una Carta de Entidad: debería soltarse en un slot de entidad.
+    - [x] Si es una carta de Habilidad: podría soltarse en cualquier zona del tablero.
+- [x] Ignorar por ahora los campeones y las cartas de campeón.
 
 ## Fase 2: Enemigos PvE
+- [ ] Introducir el concepto de Campeón como entidad fija.
 - [ ] Introducir el boss como entidad enemiga fija en el lado opuesto.
 - [ ] Agregar adds/enemigos invocables u objetos de boss según el diseño.
 - [ ] Definir un patrón básico de comportamiento/enemigo para el boss.

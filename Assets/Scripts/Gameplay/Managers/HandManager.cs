@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq; // <-- Used to change types of a list
 using UnityEngine;
 
 public class HandManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class HandManager : MonoBehaviour
     public DeckTemplate defaultDeck;
 
     private Deck playerDeck;
-    private readonly List<Card> cardsInHand = new();
+    private readonly List<IPlayableCard> cardsInHand = new();
     private readonly int MAX_CARDS_IN_HAND = 10;
 
     private int pendingDrawRequests;
@@ -28,7 +29,16 @@ public class HandManager : MonoBehaviour
 
     public void InitializeDeck()
     {
-        List<Card> deckCards = new(defaultDeck.startingCards);
+        // "Parse" all cards to `IPlayableCard`s
+        List<IPlayableCard> deckCards = defaultDeck.startingCards
+            .OfType<IPlayableCard>()
+            .ToList();
+
+        if (deckCards.Count != defaultDeck.startingCards.Count)
+        {
+            Debug.LogWarning("Deck contains non-playable CardData!");
+        }
+
         playerDeck = new Deck(deckCards);
         playerDeck.Shuffle();
     }
@@ -82,7 +92,7 @@ public class HandManager : MonoBehaviour
                 yield break;
             }
 
-            Card drawnCard = playerDeck.Draw();
+            IPlayableCard drawnCard = playerDeck.Draw();
             if (drawnCard == null)
             {
                 Debug.LogWarning("There are no more cards to draw from the deck");
@@ -105,7 +115,7 @@ public class HandManager : MonoBehaviour
     }
 
     // Coroutine to draw a card with animation
-    private IEnumerator InstantiateCardInHand(Card drawnCard)
+    private IEnumerator InstantiateCardInHand(IPlayableCard drawnCard)
     {
         GameObject newCardInstance = Instantiate(cardPrefab, handArea);
         CardDisplay cardDisplay = newCardInstance.GetComponent<CardDisplay>();

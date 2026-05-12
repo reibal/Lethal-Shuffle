@@ -20,7 +20,7 @@ public class CardPreview : MonoBehaviour
         HidePreview();
     }
 
-    public void ShowPreview(Card cardData)
+    public void ShowPreview(IPlayableCard cardData)
     {
         cardDisplay.Initialize(cardData);
         cardDisplay.ShowCard();

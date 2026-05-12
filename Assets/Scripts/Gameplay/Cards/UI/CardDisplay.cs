@@ -20,7 +20,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     #region [VARS] Basic variables
     // Store a reference to the Card Data, to pass them on when played
-    public Card CardData { get; private set; }
+    public IPlayableCard CardData { get; private set; }
     // Store the preferredWith of the Card, to use it for the placeholder when Drag&Drop-ing
     private float cardPreferredWidth;
     #endregion
@@ -50,17 +50,17 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
     // HandManager needs to call Initialize() to "fill in" the card's info
-    public void Initialize(Card data)
+    public void Initialize(IPlayableCard data)
     {
         // TODO: Review initialization to make sure all three card types have their own UI
         CardData = data;
-        nameText.text = data.cardName;
-        descriptionText.text = data.description;
-        manaText.text = data.manaCost.ToString();
+        nameText.text = data.CardName;
+        descriptionText.text = data.Description;
+        manaText.text = data.ManaCost.ToString();
 
-        if (data.artwork != null)
+        if (data.Artwork != null)
         {
-            artworkImage.sprite = data.artwork;
+            artworkImage.sprite = data.Artwork;
         }
     }
 
@@ -94,9 +94,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         StopHoverAnimation();
         cardVisual.localPosition = Vector3.zero;
         cardVisual.localScale = Vector3.one;
-
-        // Make the card slightly smaller for dragging
-        StartCoroutine(AnimateHover(Vector3.zero, new Vector3(0.8f, 0.8f, 1)));
 
         // Create the placeholder for the reserved slot
         draggedCardPlaceholder = new GameObject("CardPlaceholder");
@@ -245,7 +242,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // (WIP): Play a card on the board
     public void PlayCard()
     {
-        Debug.Log($"Playing {CardData.name}");
+        Debug.Log($"Playing {CardData.CardName}");
         Destroy(gameObject); // Destroy the card from the hand
         if (draggedCardPlaceholder)
         {

@@ -1,26 +1,35 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Entity : MonoBehaviour
+public class Entity
 {
     [Header("Information")]
     public string entityName;
-    public List<CardEnums.CardTag> entityTags;
 
-    [Header("Stats")] // Must be set for each entity
-    public int maxHealth;
+    [Header("Stats")]
     public int basicAttackPower; // <-- The once-per-turn basic Attack power (can be buffed later)
-    public int CurrentHealth { get; private set; } // <-- Will start fully healed, so no need to explicitly set it
+    public int maxHealth;
 
-    // This is great for updating your UI automatically!
+    public int CurrentHealth { get; private set; }
+
+    // (TODO: Usage Pending) This is great for updating your UI automatically!
     public UnityEvent OnHealthChanged;
     public UnityEvent OnDeath;
 
-    private void Awake()
+    public Entity(string entityName, int basicAttackPower, int maxHealth)
     {
-        // Start fully healed
-        CurrentHealth = maxHealth;
+        this.entityName = entityName;
+        this.basicAttackPower = basicAttackPower;
+        this.maxHealth = maxHealth;
+        FullHeal();
+    }
+
+    public Entity(EntityCard entityCard)
+    {
+        entityName = entityCard.CardName;
+        basicAttackPower = entityCard.AttackDamage;
+        maxHealth = entityCard.HP;
+        FullHeal();
     }
 
     public void TakeDamage(int amount)
@@ -28,7 +37,8 @@ public class Entity : MonoBehaviour
         CurrentHealth -= amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
 
-        OnHealthChanged?.Invoke(); // Tell the UI to update!
+        // Tell the UI to update:
+        OnHealthChanged?.Invoke();
 
         if (CurrentHealth <= 0) Die();
     }
@@ -39,6 +49,11 @@ public class Entity : MonoBehaviour
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke();
+    }
+
+    public void FullHeal()
+    {
+        CurrentHealth = maxHealth;
     }
 
     private void Die()
