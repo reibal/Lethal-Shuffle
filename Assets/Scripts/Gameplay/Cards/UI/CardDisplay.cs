@@ -11,16 +11,16 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     #region [EDITOR REFERENCES] UI Component References
     [Header("UI Component References")]
-    [SerializeField] private Transform cardVisual;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI descriptionText;
-    [SerializeField] private TextMeshProUGUI manaText;
-    [SerializeField] private Image artworkImage;
+    [SerializeField] protected Transform cardVisual;
+    [SerializeField] protected TextMeshProUGUI nameText;
+    [SerializeField] protected TextMeshProUGUI descriptionText;
+    [SerializeField] protected TextMeshProUGUI manaText;
+    [SerializeField] protected Image artworkImage;
     #endregion
 
     #region [VARS] Basic variables
     // Store a reference to the Card Data, to pass them on when played
-    public IPlayableCard CardData { get; private set; }
+    public IPlayableCard CardData { get; protected set; }
     // Store the preferredWith of the Card, to use it for the placeholder when Drag&Drop-ing
     private float cardPreferredWidth;
     #endregion
@@ -72,7 +72,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         StopHoverAnimation();
         // Lift by 50 units and grow to 1.2x size
         hoverCoroutine = StartCoroutine(AnimateHover(new Vector3(0, 60, 0), new Vector3(1.1f, 1.1f, 1)));
-        CardPreview.Instance.ShowPreview(CardData);
+        CardPreview.Instance.ShowPreview(gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)

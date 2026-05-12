@@ -3,7 +3,8 @@ using UnityEngine;
 public class CardPreview : MonoBehaviour
 {
     public static CardPreview Instance;
-    private CardDisplay cardDisplay;
+
+    private GameObject previewInstance;
 
     void Awake()
     {
@@ -14,21 +15,47 @@ public class CardPreview : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
-        cardDisplay = GetComponent<CardDisplay>();
         HidePreview();
     }
 
-    public void ShowPreview(IPlayableCard cardData)
+    public void ShowPreview(GameObject cardGameObject)
     {
-        cardDisplay.Initialize(cardData);
-        cardDisplay.ShowCard();
+        HidePreview();
+
+        if (cardGameObject == null) return;
+
+        previewInstance = Instantiate(cardGameObject, transform);
+        previewInstance.name = "CardPreviewClone";
+
+        // disable interactions on the preview clone
+        if (previewInstance.TryGetComponent<CanvasGroup>(out var canvasGroup))
+        {
+            canvasGroup.blocksRaycasts = false;
+        }
+
+        if (previewInstance.TryGetComponent<CardDisplay>(out var cardDisplay))
+        {
+            cardDisplay.isInteractable = false;
+        }
+
+        // Reset transform so the preview is aligned correctly under the preview parent
+        RectTransform previewRect = previewInstance.GetComponent<RectTransform>();
+        if (previewRect != null)
+        {
+            previewRect.pivot = new Vector2(1f, 1f);
+            previewRect.anchoredPosition = Vector2.zero;
+            previewRect.localScale = Vector3.one * 1.6f;
+        }
     }
 
     public void HidePreview()
     {
-        cardDisplay.HideCard();
+        if (previewInstance != null)
+        {
+            Destroy(previewInstance);
+            previewInstance = null;
+        }
     }
-
 }

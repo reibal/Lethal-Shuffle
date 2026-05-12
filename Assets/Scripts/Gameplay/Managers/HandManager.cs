@@ -6,7 +6,8 @@ using UnityEngine;
 public class HandManager : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private CardDisplay cardPrefab;
+    [SerializeField] private EntityCardDisplay entityCardPrefab;
     [Header("GameObjects")]
     [SerializeField] private Transform handArea;
 
@@ -117,10 +118,22 @@ public class HandManager : MonoBehaviour
     // Coroutine to draw a card with animation
     private IEnumerator InstantiateCardInHand(IPlayableCard drawnCard)
     {
-        GameObject newCardInstance = Instantiate(cardPrefab, handArea);
-        CardDisplay cardDisplay = newCardInstance.GetComponent<CardDisplay>();
-        cardDisplay.Initialize(drawnCard);
-        yield return cardDisplay.StartCardDrawAnimation();
+        GameObject newCardInstance;
+        if (drawnCard is EntityCard drawnEntityCard)
+        {
+            newCardInstance = Instantiate(entityCardPrefab.gameObject, handArea);
+            EntityCardDisplay entityCardDisplay = newCardInstance.GetComponent<EntityCardDisplay>();
+            entityCardDisplay.Initialize(drawnEntityCard);
+            yield return entityCardDisplay.StartCardDrawAnimation();
+        }
+        else
+        {
+            newCardInstance = Instantiate(cardPrefab.gameObject, handArea);
+            CardDisplay cardDisplay = newCardInstance.GetComponent<CardDisplay>();
+            cardDisplay.Initialize(drawnCard);
+            yield return cardDisplay.StartCardDrawAnimation();
+        }
+
         isDrawing = false;
     }
 }
