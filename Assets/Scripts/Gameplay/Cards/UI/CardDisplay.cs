@@ -111,6 +111,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         transform.SetParent(transform.root);
         // And disable blocking raycasts so we can detect what's under the mouse, through the card
         canvasGroup.blocksRaycasts = false;
+        CardPreview.Instance.DisablePreview();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -159,6 +160,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         hoverCoroutine = StartCoroutine(AnimateHover(Vector3.zero, Vector3.one));
 
         Destroy(draggedCardPlaceholder);
+        CardPreview.Instance.EnablePreview();
     }
 
     private bool CheckDropOnBoard(List<RaycastResult> raycastHits)
@@ -248,6 +250,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             Destroy(draggedCardPlaceholder); // Destroy the placeholder from the hand
         }
+        CardPreview.Instance.EnablePreview();
     }
     #endregion
 

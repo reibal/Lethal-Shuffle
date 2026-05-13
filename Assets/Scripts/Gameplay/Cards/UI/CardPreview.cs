@@ -5,6 +5,7 @@ public class CardPreview : MonoBehaviour
     public static CardPreview Instance;
 
     private GameObject previewInstance;
+    private bool isEnabled = true;
 
     void Awake()
     {
@@ -23,8 +24,7 @@ public class CardPreview : MonoBehaviour
     public void ShowPreview(GameObject cardGameObject)
     {
         HidePreview();
-
-        if (cardGameObject == null) return;
+        if (!isEnabled || cardGameObject == null) return;
 
         previewInstance = Instantiate(cardGameObject, transform);
         previewInstance.name = "CardPreviewClone";
@@ -44,9 +44,21 @@ public class CardPreview : MonoBehaviour
         RectTransform previewRect = previewInstance.GetComponent<RectTransform>();
         if (previewRect != null)
         {
+            previewRect.anchorMin = Vector2.one;
+            previewRect.anchorMax = Vector2.one;
             previewRect.pivot = new Vector2(1f, 1f);
             previewRect.anchoredPosition = Vector2.zero;
             previewRect.localScale = Vector3.one * 1.6f;
+        }
+
+        // Also align the CardVisual child to top-right
+        RectTransform cardVisualRect = previewInstance.transform.Find("CardVisual") as RectTransform;
+        if (cardVisualRect != null)
+        {
+            cardVisualRect.anchorMin = Vector2.one;
+            cardVisualRect.anchorMax = Vector2.one;
+            cardVisualRect.pivot = Vector2.one;
+            cardVisualRect.anchoredPosition = Vector2.zero;
         }
     }
 
@@ -57,5 +69,15 @@ public class CardPreview : MonoBehaviour
             Destroy(previewInstance);
             previewInstance = null;
         }
+    }
+
+    public void EnablePreview()
+    {
+        isEnabled = true;
+    }
+
+    public void DisablePreview()
+    {
+        isEnabled = false;
     }
 }

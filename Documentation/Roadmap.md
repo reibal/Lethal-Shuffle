@@ -10,7 +10,7 @@ Este roadmap describe las fases de desarrollo para llegar a un prototipo jugable
     - [x] Si es una carta de Habilidad: podría soltarse en cualquier zona del tablero.
 - [x] Mostrar al campeon del jugador al iniciar el juego (el campeón existe en el DeckTemplate)
 - [x] Crear prefabs distintos para cada tipo de carta, para que se vean diferentes en la UI
-- [ ] Lograr que la preview de las cartas (al hacer hover) sea la adecuada según el tipo de carta (Ability, Entity...)
+- [x] Lograr que la preview de las cartas (al hacer hover) sea la adecuada según el tipo de carta (Ability, Entity...)
 
 ## Fase 2: Enemigos PvE
 - [x] Introducir el concepto de Campeón como entidad fija (por ahora existirá un único campeón por mazo).

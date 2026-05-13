@@ -31,6 +31,7 @@ public class EntitySlotDropzone : MonoBehaviour, IDropHandler
 
         draggedCard.PlayCard();
         Destroy(draggedCard.gameObject);
+        CardPreview.Instance.EnablePreview();
     }
 
     public void SetEntity(Entity entity)
